@@ -10,6 +10,93 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <link rel="stylesheet" href="css/style.css" />
+    <style>
+        /* أنماط إضافية */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 999;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-box {
+            background: #1a1e26;
+            border-radius: 28px;
+            padding: 40px 48px;
+            max-width: 440px;
+            width: 90%;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.04);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.7);
+            animation: modalPop 0.35s ease;
+        }
+        @keyframes modalPop {
+            0% { transform: scale(0.92) translateY(10px); opacity: 0; }
+            100% { transform: scale(1) translateY(0); opacity: 1; }
+        }
+        .modal-box i { font-size: 3.2rem; color: #6c8cff; margin-bottom: 12px; }
+        .modal-box .countdown {
+            font-size: 3rem;
+            font-weight: 700;
+            color: white;
+            margin: 8px 0;
+        }
+        .modal-box .sub { color: #a0a8b4; }
+        .modal-box .app-name-display {
+            color: #6c8cff;
+            font-weight: 600;
+            margin: 4px 0;
+        }
+        .btn-outline {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            padding: 12px 32px;
+            border-radius: 60px;
+            font-weight: 500;
+            color: white;
+            cursor: pointer;
+            transition: 0.25s ease;
+            backdrop-filter: blur(4px);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-family: inherit;
+        }
+        .btn-outline:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.2);
+        }
+        .badge-admin {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            background: rgba(108,140,255,0.15);
+            backdrop-filter: blur(8px);
+            padding: 8px 16px;
+            border-radius: 60px;
+            border: 1px solid rgba(108,140,255,0.1);
+            font-size: 0.7rem;
+            color: #6c8cff;
+        }
+        .badge-admin a {
+            color: #6c8cff;
+            text-decoration: none;
+        }
+        .badge-admin a:hover { color: white; }
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #a0a8b4;
+            grid-column: 1/-1;
+        }
+        .empty-state i { font-size: 3rem; color: #6c8cff; margin-bottom: 12px; }
+        .empty-state p { margin-top: 8px; }
+    </style>
 </head>
 <body>
 
@@ -44,12 +131,12 @@
             <!-- قسم Hero -->
             <section class="hero">
                 <div class="hero-badge"><i class="fas fa-star" style="margin-right:6px;"></i> أحدث إصدار</div>
-                <h1><span>Hashim Launcher</span> · v3.2</h1>
-                <p style="max-width:600px; color:var(--text-secondary); font-size:1.1rem;">
+                <h1><span id="heroAppName">Hashim Launcher</span> · <span id="heroAppVersion">v3.2</span></h1>
+                <p style="max-width:600px; color:var(--text-secondary); font-size:1.1rem;" id="heroAppDesc">
                     منصة احترافية لتطبيقات Android. تصميم عصري، أداء فائق، وتجربة مستخدم استثنائية.
                 </p>
                 <div class="hero-actions">
-                    <button class="btn btn-primary" id="downloadBtn"><i class="fas fa-download"></i> تحميل APK</button>
+                    <button class="btn btn-primary" id="heroDownloadBtn"><i class="fas fa-download"></i> تحميل APK</button>
                     <button class="btn btn-outline" id="learnMoreBtn">تعرف أكثر <i class="fas fa-arrow-right"></i></button>
                 </div>
             </section>
@@ -65,17 +152,17 @@
                 <div class="glass" style="padding:20px;">
                     <i class="fas fa-clock" style="color:var(--accent);"></i>
                     <strong>آخر التحديثات</strong>
-                    <br><span style="color:var(--text-secondary);" id="latestUpdate">Hashim Launcher v3.2 · منذ ساعتين</span>
+                    <br><span style="color:var(--text-secondary);" id="latestUpdate">جاري التحميل...</span>
                 </div>
                 <div class="glass" style="padding:20px;">
                     <i class="fas fa-fire" style="color:var(--accent);"></i>
                     <strong>الأكثر تحميلاً</strong>
-                    <br><span style="color:var(--text-secondary);" id="mostDownloaded">Hashim Launcher · 14.8k</span>
+                    <br><span style="color:var(--text-secondary);" id="mostDownloaded">جاري التحميل...</span>
                 </div>
                 <div class="glass" style="padding:20px;">
                     <i class="fas fa-sparkles" style="color:var(--accent);"></i>
                     <strong>تطبيقات جديدة</strong>
-                    <br><span style="color:var(--text-secondary);" id="newApps">Hashim Notes · v1.0</span>
+                    <br><span style="color:var(--text-secondary);" id="newApps">جاري التحميل...</span>
                 </div>
             </div>
 
@@ -98,16 +185,262 @@
         <div class="modal-box">
             <i class="fas fa-cloud-download-alt"></i>
             <h3 style="margin:8px 0;">جاري تجهيز التحميل...</h3>
+            <p class="app-name-display" id="downloadAppName">التطبيق</p>
             <div class="countdown" id="countdownDisplay">3</div>
             <div class="sub">سيتم التحويل إلى MediaFire</div>
             <button class="btn btn-outline" style="margin-top:16px;" id="modalCloseBtn">إلغاء</button>
         </div>
     </div>
 
+    <!-- زر الوصول للوحة التحكم -->
+    <div class="badge-admin">
+        <i class="fas fa-cog"></i>
+        <a href="admin/dashboard.html" target="_blank">Admin</a>
+    </div>
+
     <!-- ملفات JavaScript -->
     <script src="js/splash.js"></script>
-    <script src="js/apps.js"></script>
-    <script src="js/modal.js"></script>
-    <script src="js/main.js"></script>
+    <script>
+        // ============================================
+        // الصفحة الرئيسية - ربط بـ localStorage
+        // ============================================
+        
+        // تحميل التطبيقات من localStorage
+        function getApps() {
+            const saved = localStorage.getItem('hashim_apps');
+            if (saved) {
+                try {
+                    return JSON.parse(saved);
+                } catch(e) {}
+            }
+            // بيانات افتراضية إذا لم توجد في localStorage
+            return [
+                { id: 1, name: 'Hashim Launcher', version: 'v3.2', icon: 'fa-rocket', downloads: 14800, downloadLink: 'https://www.mediafire.com/file/xxx/launcher.apk', description: 'مشغل تطبيقات احترافي بتصميم عصري' },
+                { id: 2, name: 'Hashim Notes', version: 'v1.0', icon: 'fa-pen-fancy', downloads: 3200, downloadLink: 'https://www.mediafire.com/file/xxx/notes.apk', description: 'تطبيق تدوين ملاحظات أنيق وسريع' },
+                { id: 3, name: 'Hashim Files', version: 'v2.1', icon: 'fa-folder-open', downloads: 6700, downloadLink: 'https://www.mediafire.com/file/xxx/files.apk', description: 'مدير ملفات ذكي مع بحث سريع' },
+                { id: 4, name: 'Hashim Camera', version: 'v0.9', icon: 'fa-camera', downloads: 2100, downloadLink: 'https://www.mediafire.com/file/xxx/camera.apk', description: 'تطبيق كاميرا بسيط مع فلاتر احترافية' },
+                { id: 5, name: 'Hashim Weather', version: 'v2.0', icon: 'fa-cloud-sun', downloads: 8900, downloadLink: 'https://www.mediafire.com/file/xxx/weather.apk', description: 'تطبيق الطقس بتصميم جميل وتوقعات دقيقة' }
+            ];
+        }
+
+        let allApps = [];
+
+        // عرض التطبيقات في الشبكة
+        function renderApps(filter = '') {
+            const grid = document.getElementById('appGrid');
+            const filtered = allApps.filter(app =>
+                app.name.toLowerCase().includes(filter.toLowerCase())
+            );
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-search"></i>
+                        <p>لا توجد نتائج مطابقة</p>
+                        <p style="font-size:0.8rem; margin-top:4px;">جرب كلمة بحث مختلفة</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(app => `
+                <div class="card-app app-card">
+                    <div class="icon-big"><i class="fas ${app.icon}" style="color:var(--accent);"></i></div>
+                    <div class="app-name">${app.name}</div>
+                    <div class="app-meta">
+                        <span><i class="fas fa-tag"></i> ${app.version}</span>
+                        <span><i class="fas fa-download"></i> ${app.downloads.toLocaleString()}</span>
+                        ${app.downloadLink ? `<span><i class="fas fa-link"></i> متاح</span>` : ''}
+                    </div>
+                    <button class="btn-sm download-app-btn" data-id="${app.id}">
+                        <i class="fas fa-download"></i> تحميل
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        // تحديث قسم Hero بأحدث تطبيق
+        function updateHero() {
+            if (allApps.length === 0) return;
+            // أحدث تطبيق (أول تطبيق في القائمة)
+            const latest = allApps[0];
+            document.getElementById('heroAppName').textContent = latest.name;
+            document.getElementById('heroAppVersion').textContent = latest.version;
+            document.getElementById('heroAppDesc').textContent = latest.description || 'تطبيق مميز من Hashim Android';
+            
+            // تحديث زر التحميل في Hero
+            const heroBtn = document.getElementById('heroDownloadBtn');
+            heroBtn.dataset.id = latest.id;
+        }
+
+        // تحديث الأقسام الإضافية
+        function updateStats() {
+            if (allApps.length === 0) {
+                document.getElementById('latestUpdate').textContent = 'لا توجد تطبيقات';
+                document.getElementById('mostDownloaded').textContent = 'لا توجد تطبيقات';
+                document.getElementById('newApps').textContent = 'لا توجد تطبيقات';
+                return;
+            }
+
+            // الأكثر تحميلاً
+            const mostDownloaded = allApps.reduce((a, b) => a.downloads > b.downloads ? a : b);
+            document.getElementById('mostDownloaded').textContent = 
+                `${mostDownloaded.name} · ${(mostDownloaded.downloads / 1000).toFixed(1)}k`;
+
+            // أحدث تطبيق (أول عنصر)
+            const newest = allApps[0];
+            document.getElementById('newApps').textContent = 
+                `${newest.name} · ${newest.version}`;
+
+            // آخر تحديث (أول عنصر)
+            document.getElementById('latestUpdate').textContent = 
+                `${newest.name} ${newest.version}`;
+        }
+
+        // ============================================
+        // زر التحميل مع عداد تنازلي
+        // ============================================
+        let downloadCountdown = null;
+        let downloadAppLink = '';
+
+        function startDownload(appId) {
+            const app = allApps.find(a => a.id === appId);
+            
+            if (!app) {
+                alert('❌ التطبيق غير موجود');
+                return;
+            }
+            
+            if (!app.downloadLink) {
+                alert('❌ لا يوجد رابط تحميل لهذا التطبيق');
+                return;
+            }
+            
+            downloadAppLink = app.downloadLink;
+            let countdown = 3;
+            
+            const modal = document.getElementById('downloadModal');
+            const countdownEl = document.getElementById('countdownDisplay');
+            const appNameEl = document.getElementById('downloadAppName');
+            
+            appNameEl.textContent = app.name;
+            countdownEl.textContent = countdown;
+            modal.classList.add('active');
+            
+            if (downloadCountdown) clearInterval(downloadCountdown);
+            downloadCountdown = setInterval(() => {
+                countdown -= 1;
+                countdownEl.textContent = countdown;
+                
+                if (countdown <= 0) {
+                    clearInterval(downloadCountdown);
+                    downloadCountdown = null;
+                    modal.classList.remove('active');
+                    window.open(downloadAppLink, '_blank');
+                }
+            }, 1000);
+        }
+
+        // إغلاق نافذة التحميل
+        document.getElementById('modalCloseBtn').addEventListener('click', function() {
+            if (downloadCountdown) {
+                clearInterval(downloadCountdown);
+                downloadCountdown = null;
+            }
+            document.getElementById('downloadModal').classList.remove('active');
+        });
+
+        // إغلاق عند الضغط على الخلفية
+        document.getElementById('downloadModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                if (downloadCountdown) {
+                    clearInterval(downloadCountdown);
+                    downloadCountdown = null;
+                }
+                this.classList.remove('active');
+            }
+        });
+
+        // ============================================
+        // مستمعو الأحداث
+        // ============================================
+        
+        // البحث المباشر
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            renderApps(e.target.value);
+        });
+
+        // زر التحميل في البطاقات
+        document.addEventListener('click', function(e) {
+            const downloadBtn = e.target.closest('.download-app-btn');
+            if (downloadBtn) {
+                const appId = parseInt(downloadBtn.dataset.id);
+                startDownload(appId);
+            }
+        });
+
+        // زر التحميل في Hero
+        document.getElementById('heroDownloadBtn').addEventListener('click', function() {
+            const appId = parseInt(this.dataset.id);
+            if (appId) startDownload(appId);
+        });
+
+        // زر "تعرف أكثر"
+        document.getElementById('learnMoreBtn').addEventListener('click', function() {
+            alert('✨ منصة Hashim Android - منصة احترافية لنشر تطبيقات Android.\n\nجميع التطبيقات من تطويري حصرياً.');
+        });
+
+        // تبديل الوضع (داكن/فاتح)
+        const themeBtn = document.getElementById('themeToggle');
+        let isDark = true;
+        themeBtn.addEventListener('click', function() {
+            isDark = !isDark;
+            const root = document.documentElement;
+            if (isDark) {
+                root.style.setProperty('--bg-primary', '#0b0d10');
+                root.style.setProperty('--bg-secondary', '#14181c');
+                root.style.setProperty('--text-primary', '#f0f2f5');
+                root.style.setProperty('--text-secondary', '#a0a8b4');
+                root.style.setProperty('--card-bg', 'rgba(30, 34, 40, 0.6)');
+                root.style.setProperty('--bg-glass', 'rgba(20, 24, 28, 0.55)');
+                themeBtn.innerHTML = '<i class="fas fa-moon"></i>';
+            } else {
+                root.style.setProperty('--bg-primary', '#f0f2f5');
+                root.style.setProperty('--bg-secondary', '#e4e8ef');
+                root.style.setProperty('--text-primary', '#0b0d10');
+                root.style.setProperty('--text-secondary', '#4a5058');
+                root.style.setProperty('--card-bg', 'rgba(255,255,255,0.5)');
+                root.style.setProperty('--bg-glass', 'rgba(255,255,255,0.4)');
+                themeBtn.innerHTML = '<i class="fas fa-sun"></i>';
+            }
+        });
+
+        // ============================================
+        // التهيئة
+        // ============================================
+        function init() {
+            allApps = getApps();
+            renderApps();
+            updateHero();
+            updateStats();
+            console.log(`✅ تم تحميل ${allApps.length} تطبيق`);
+        }
+
+        // تنفيذ التهيئة بعد تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', init);
+        
+        // إعادة التحميل عند تغيير localStorage (من لوحة التحكم)
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'hashim_apps') {
+                allApps = getApps();
+                renderApps();
+                updateHero();
+                updateStats();
+                console.log('🔄 تم تحديث التطبيقات من localStorage');
+            }
+        });
+
+        console.log('🚀 Hashim Android Platform loaded successfully!');
+    </script>
 </body>
 </html>
