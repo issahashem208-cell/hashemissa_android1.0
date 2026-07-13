@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ar" dir="ltr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>اتصل بنا · Hashim Android</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+    <div class="container">
+        <div style="padding:16px 0;">
+            <a href="../index.html" style="color:var(--text-secondary);"><i class="fas fa-arrow-left"></i> العودة للرئيسية</a>
+        </div>
+        <div style="padding:40px 0; max-width:600px; margin:0 auto;">
+            <h1 style="font-size:2.4rem; margin-bottom:8px;"><i class="fas fa-envelope" style="color:var(--accent);"></i> اتصل بنا</h1>
+            <p style="color:var(--text-secondary); margin-bottom:30px;">نسعد بتواصلك معنا</p>
+            <div class="glass" style="padding:30px;">
+                <p><i class="fas fa-envelope" style="color:var(--accent); width:30px;"></i> hashim@android.dev</p>
+                <p><i class="fab fa-twitter" style="color:var(--accent); width:30px;"></i> @HashimAndroid</p>
+                <p><i class="fab fa-github" style="color:var(--accent); width:30px;"></i> github.com/hashim-android</p>
+                <hr style="border-color:rgba(255,255,255,0.05); margin:20px 0;" />
+                <form onsubmit="alert('تم إرسال الرسالة! ✅'); return false;">
+                    <input type="text" placeholder="الاسم" style="width:100%; padding:12px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.05); border-radius:12px; color:white; margin:6px 0;" />
+                    <input type="email" placeholder="البريد الإلكتروني" style="width:100%; padding:12px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.05); border-radius:12px; color:white; margin:6px 0;" />
+                    <textarea placeholder="الرسالة" rows="4" style="width:100%; padding:12px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.05); border-radius:12px; color:white; margin:6px 0; resize:vertical;"></textarea>
+                    <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center; margin-top:6px;">إرسال <i class="fas fa-paper-plane"></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
