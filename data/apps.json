@@ -1,0 +1,66 @@
+{
+  "apps": [
+    {
+      "id": 1,
+      "name": "Hashim Launcher",
+      "version": "3.2",
+      "versionCode": 32,
+      "minSdk": 21,
+      "size": "18 MB",
+      "icon": "fa-rocket",
+      "downloadUrl": "https://www.mediafire.com/file/xxx/hashim-launcher.apk",
+      "isForceUpdate": false,
+      "updateMessage": "تحسينات في الأداء وإصلاح الأخطاء",
+      "releaseDate": "2026-07-13",
+      "downloads": 14800,
+      "rating": 4.8,
+      "description": "مشغل تطبيقات احترافي بتصميم عصري وأداء فائق.",
+      "features": [
+        "تصميم Minimal Modern",
+        "دعم الوضع الداكن",
+        "بحث سريع",
+        "تخصيص كامل"
+      ],
+      "screenshots": [
+        "assets/screenshots/launcher-1.png",
+        "assets/screenshots/launcher-2.png"
+      ],
+      "changelog": [
+        "v3.2: تحسين الأداء",
+        "v3.1: إضافة ميزة البحث",
+        "v3.0: إعادة تصميم كامل"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Hashim Notes",
+      "version": "1.0",
+      "versionCode": 10,
+      "minSdk": 21,
+      "size": "6 MB",
+      "icon": "fa-pen-fancy",
+      "downloadUrl": "https://www.mediafire.com/file/xxx/hashim-notes.apk",
+      "isForceUpdate": false,
+      "updateMessage": "الإصدار الأولي",
+      "releaseDate": "2026-07-12",
+      "downloads": 3200,
+      "rating": 4.5,
+      "description": "تطبيق تدوين ملاحظات أنيق وسريع مع دعم التنسيق.",
+      "features": [
+        "واجهة نظيفة",
+        "تنسيق النص",
+        "بحث سريع",
+        "نسخ احتياطي"
+      ],
+      "screenshots": [],
+      "changelog": [
+        "v1.0: الإصدار الأول"
+      ]
+    }
+  ],
+  "metadata": {
+    "lastUpdated": "2026-07-13T14:30:00Z",
+    "totalApps": 5,
+    "totalDownloads": 35700
+  }
+}
