@@ -1,0 +1,14 @@
+{
+  "name": "hashim-android-platform",
+  "version": "1.0.0",
+  "description": "منصة احترافية لنشر تطبيقات Android",
+  "author": "Hashim",
+  "license": "MIT",
+  "scripts": {
+    "start": "serve .",
+    "build": "echo 'Build ready'"
+  },
+  "devDependencies": {
+    "serve": "^14.0.0"
+  }
+}
